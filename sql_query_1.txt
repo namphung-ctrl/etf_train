@@ -1,0 +1,2 @@
+SELECT etf_code as 'Tên mã' ,sum(value) as 'Net asset', Fund_Date as 'ngày' FROM train.etf_asset_detail_train
+group by etf_code, Fund_Date

@@ -1,0 +1,94 @@
+create database train;
+
+-- tạo bảng etf_train
+
+create table etf_info_train(
+id int auto_increment PRIMARY KEY comment "Primary Key",
+listing_date date comment "Ngày bắt đầu quỹ",
+etf_code varchar(200) comment "Mã quỹ",
+etfn_name varchar(200) comment "Tên quỹ (Tiếng Anh)",
+index_name varchar(200) comment "Tên sàn",
+trading_unit varchar(200) comment "Đơn vị giao dịch",
+management_company varchar(200) comment "Quỹ quản lý",
+trust_fee varchar(200) comment "Phí quản lý quỹ (tính theo %)",
+distribution_yield decimal(6,4) comment "Kênh phân phối",
+etf_type varchar(200) comment "Loại ETF",
+created_at timestamp default current_timestamp comment "Ngày tạo bản ghi");
+
+-- tạo bảng etf_sectors
+
+create table etf_sectors_train(
+id int auto_increment PRIMARY KEY comment "Primary Key",
+etf_code varchar(100) comment "Mã quỹ",
+sector varchar(200) comment "Tên ngành",
+percent decimal(10,2) comment "tỷ lệ",
+created_at timestamp default current_timestamp comment "Ngày tạo bản ghi");
+
+-- tạo bảng "etf_asset_detail"
+ 
+create table etf_asset_detail(
+id int auto_increment PRIMARY KEY comment "Primary Key",
+Code varchar(100) comment "Mã",
+Name varchar(200) comment "Tên",
+Exchange varchar(100) comment "Sàn",
+Currency varchar(100) comment "Mã tiền tệ",
+Shares_Amount bigint comment "Số lượng",
+Stock_Price decimal(20,2) comment "Giá",
+Value decimal(20,2) comment "Tổng giá trị",
+etf_code varchar(100) comment "Mã quỹ",
+Fund_Date date comment "Ngày cập nhật",
+Shares_Outstanding bigint comment "Số lưu hành",
+ISIN varchar(100) comment "Mã ISIN",
+created_at timestamp default current_timestamp comment "Ngày tạo bản ghi");
+
+-- tạo bảng etf_equity_holdings
+
+create table etf_equity_holdings(
+id int auto_increment PRIMARY KEY comment "Primary Key",
+etf_code varchar(100) comment "Mã quỹ",
+price_earnings decimal(10,2) comment "P/E ratio",
+price_book decimal(10,2) comment "P/B ratio",
+price_sales decimal(10,2) comment "P/S ratio",
+price_cashflow decimal(10,2) comment "P/CF ratio",
+created_at timestamp default current_timestamp comment "Ngày tạo bản ghi");
+
+-- tạo bảng etf_historical_price
+
+create table etf_historical_price(
+id int auto_increment PRIMARY KEY comment "Primary Key",
+date datetime comment "Ngày lấy giá",
+etf_code varchar(100) comment "Mã quỹ",
+open bigint comment "Giá mở cửa",
+high bigint comment "Giá cao nhất",
+low bigint comment "Giá thấp nhất",
+close bigint comment "Giá đóng cửa",
+volume bigint comment "Khối lượng giao dịch",
+currency varchar(100) comment "Loại tiền tệ, JPY",
+created_at timestamp default current_timestamp comment "Ngày tạo bản ghi");
+
+-- tao khoa rang buoc de update du lieu
+ALTER TABLE etf_info_train
+ADD UNIQUE INDEX unique_etf_code (etf_code);
+
+-- tao khoa rang buoc de update du lieu
+ALTER TABLE etf_historical_price_train
+ADD UNIQUE INDEX unique_etf_code (etf_code);
+
+-- tao khoa rang buoc de update du lieu
+ALTER table etf_sectors_train
+ADD UNIQUE KEY etf_sector_unique (etf_code, sector);
+
+-- tao khoa rang buoc de update du lieu
+ALTER table etf_equity_holdings_train
+ADD UNIQUE KEY etf_equity_unique (etf_code);
+
+
+
+
+
+
+
+
+
+
+
