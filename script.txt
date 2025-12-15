@@ -1,0 +1,81 @@
+các bước chạy etf code:
+
+B1. tạo 1 kết nối mới trong mysql (bao gồm các thông tin: user, password, host , database)
+
+B2. tạo database và các bảng mới trong mysql:
+
+create database train;
+
+use train;
+
+-- tạo bảng "etf_info_train"
+
+create table etf_info(
+id int auto_increment PRIMARY KEY comment "Primary Key",
+listing_date datetime comment "Ngày bắt đầu quỹ",
+etf_code varchar(100) UNIQUE comment "Mã quỹ",
+etfn_name varchar(100) comment "Tên quỹ (Tiếng Anh)",
+index_name varchar(100) comment "Tên sàn",
+trading_unit varchar(100) comment "Đơn vị giao dịch",
+management_company varchar(200) comment "Quỹ quản lý",
+trust_fee decimal(6,4) comment "Phí quản lý quỹ (tính theo %)",
+distribution_yield decimal(6,4) comment "Kênh phân phối",
+etf_type varchar(100) comment "Loại ETF",
+created_at timestamp default current_timestamp comment "Ngày tạo bản ghi");
+
+-- tạo bảng "etf_asset_detail_train"
+ 
+create table etf_asset_detail(
+id int auto_increment PRIMARY KEY comment "Primary Key",
+code varchar(100) comment "Mã",
+name varchar(100) comment "Tên",
+exchange varchar(100) comment "Sàn",
+currency varchar(100) comment "Mã tiền tệ",
+shares_amount bigint comment "Số lượng",
+stock_price decimal(6,4) comment "Giá",
+value decimal(20,4) comment "Tổng giá trị",
+etf_code varchar(100) comment "Mã quỹ",
+fund_date datetime comment "Ngày cập nhật",
+shares_outstanding bigint comment "Số lưu hành",
+isin char(12) comment "Mã ISIN",
+created_at timestamp default current_timestamp comment "Ngày tạo bản ghi");
+
+-- tạo bảng etf_historical_price
+
+create table etf_historical_price_train(
+id int auto_increment PRIMARY KEY comment "Primary Key",
+date datetime comment "Ngày lấy giá",
+etf_code varchar(100) UNIQUE comment "Mã quỹ",
+open decimal(10,2) comment "Giá mở cửa",
+high decimal(10,2) comment "Giá cao nhất",
+low decimal(10,2) comment "Giá thấp nhất",
+close decimal(10,2) comment "Giá đóng cửa",
+volume bigint comment "Khối lượng giao dịch",
+currency varchar(100) comment "Loại tiền tệ, JPY",
+created_at timestamp default current_timestamp comment "Ngày tạo bản ghi"); 
+
+-- tạo bảng etf_sectors
+
+create table etf_sectors_train(
+id int auto_increment PRIMARY KEY comment "Primary Key",
+etf_code varchar(100) UNIQUE comment "Mã quỹ",
+sector varchar(100) comment "Tên ngành",
+percent decimal(10,2) comment "tỷ lệ",
+created_at timestamp default current_timestamp comment "Ngày tạo bản ghi");
+
+-- tạo bảng etf_equity_holdings
+
+create table etf_equity_holdings_train(
+id int auto_increment PRIMARY KEY comment "Primary Key",
+etf_code varchar(100) UNIQUE comment "Mã quỹ",
+price_earnings decimal(10,2) comment "P/E ratio",
+price_book decimal(10,2) comment "P/B ratio",
+price_sales decimal(10,2) comment "P/S ratio",
+price_cashflow decimal(10,2) comment "P/CF ratio",
+created_at timestamp default current_timestamp comment "Ngày tạo bản ghi");
+
+B3. chạy code trên python theo thứ tự: 1. etf_info, 2.etf_asset_detail, 3.etf_historical_price, 4.etf_sectors, 5.etf_equity_holdings
+	
+	kết nối với mysql với thông tin riêng: sử dụng thông tin user/password/host của connection | sử dụng database và table giống như trong code
+	
+
