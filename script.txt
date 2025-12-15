@@ -1,6 +1,6 @@
 các bước chạy etf code:
 
-B1. tạo 1 kết nối mới trong mysql (bao gồm các thông tin: user, password, host , database)
+B1. tạo 1 kết nối mới trong mysql (bao gồm các thông tin: user, password, host , database = 'train')
 
 B2. tạo database và các bảng mới trong mysql:
 
@@ -78,4 +78,5 @@ B3. chạy code trên python theo thứ tự: 1. etf_info, 2.etf_asset_detail, 3
 	
 	kết nối với mysql với thông tin riêng: sử dụng thông tin user/password/host của connection | sử dụng database và table giống như trong code
 	
+
 
